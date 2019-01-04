@@ -8,26 +8,7 @@ namespace RouteStaticFiles
 {
     public class StaticFiles
     {
-        private readonly RequestDelegate _next;
-
-        public StaticFiles(RequestDelegate next)
-        {
-            _next = next;
-        }
-
-        public async Task InvokeAsync(HttpContext context)
-        {
-            if (context.Request.Path.HasValue)
-            {
-                await ReturnStaticFile(context, context.Request.Path.Value);
-                return;
-            }
-
-            // Call the next delegate/middleware in the pipeline
-            await _next(context);
-        }
-
-        private static async Task ReturnStaticFile(HttpContext context, PathString filePath)
+        internal static async Task ReturnStaticFile(HttpContext context, PathString filePath)
         {
             FileInfo file;
 
